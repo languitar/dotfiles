@@ -1,0 +1,252 @@
+set $mod Mod4
+
+font pango:DejaVu Sans Mono for Powerline 8
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod normal
+
+# clipboard
+exec wl-paste --watch cliphist store
+
+# start a terminal
+bindsym $mod+Return exec foot
+# password utilities
+bindsym $mod+t exec ~/.config/sway/wofibw.sh
+bindsym $mod+Shift+t exec ~/.config/sway/wofibw.sh --user
+bindsym $mod+Shift+0 exec ~/.config/sway/ykoath.sh
+bindsym $mod+Control+x exec swaylock -f -c 444444
+bindsym $mod+p exec ~/.config/sway/screenshot.sh
+bindsym $mod+Shift+p exec ~/.config/sway/screenshot.sh --delay
+
+# quickswitch navigation
+bindsym $mod+Shift+m exec swaymsg -t get_tree | jq -r '.. | (.nodes? // empty)[] | select(.nodes==[]) | .name' | grep -v '__i3_scratch' | wofi --dmenu -i -p 'Focus window' | xargs -I '$' swaymsg '[title="$"] focus'
+bindsym $mod+m exec swaymsg -t get_workspaces | jq -r '.[] | select(.name) | .name' | wofi --dmenu -i -p 'Focus workspace' | xargs -I '$' swaymsg "workspace $"
+bindsym $mod+i exec swaymsg -t get_workspaces | jq -r '.[] | select(.name) | .name' | grep -v '__i3_scratch' | wofi --dmenu -i -p 'Move the current window to workspace' | xargs -I '$' swaymsg "move container to workspace $"
+bindsym $mod+Shift+i exec swaymsg -t get_tree | jq -r '.. | (.nodes? // empty)[] | select(.nodes==[]) | .name' | grep -v '__i3_scratch' | wofi --dmenu -i -p 'Move window to the current workspace' | xargs -I '$' swaymsg '[title="$"] move container to workspace current'
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus [app_id="floating-terminal"] scratchpad show
+bindsym $mod+backspace [class="Logseq"] scratchpad show
+bindsym $mod+Shift+backspace scratchpad show
+
+# start dmenu (a program launcher)
+bindsym $mod+space exec wofi --show run
+bindsym $mod+d exec wofi --show drun -I
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym $mod+Tab focus output left
+
+# alternatively, you can use the cursor keys:
+# bindsym $mod+Left focus left
+# bindsym $mod+Down focus down
+# bindsym $mod+Up focus up
+# bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Control+h move left
+bindsym $mod+Control+j move down
+bindsym $mod+Control+k move up
+bindsym $mod+Control+l move right
+
+# alternatively, you can use the cursor keys:
+# bindsym $mod+Shift+Left move left
+# bindsym $mod+Shift+Down move down
+# bindsym $mod+Shift+Up move up
+# bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+b split h
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+bindsym $mod+Shift+f fullscreen global
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+s sticky toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+Control+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+bindsym $mod+q focus child
+
+bindsym $mod+Left workspace prev_on_output
+bindsym $mod+Shift+h workspace prev_on_output
+bindsym $mod+Right workspace next_on_output
+bindsym $mod+Shift+l workspace next_on_output
+
+bindsym $mod+Shift+n exec "swaymsg rename workspace to $(wofi --dmenu --lines 1 -p 'New name')"
+bindsym $mod+n exec "swaymsg workspace $(wofi --dmenu --lines 1 -p 'New name')"
+
+bindsym $mod+y [urgent=latest] focus
+
+bindsym $mod+u move container to output left
+bindsym $mod+o move container to output right
+bindsym $mod+Control+u move container to output down
+bindsym $mod+Control+o move container to output up
+
+bindsym $mod+Shift+u move workspace to output left
+bindsym $mod+Shift+o move workspace to output right
+bindsym $mod+Control+Shift+u move workspace to output down
+bindsym $mod+Control+Shift+o move workspace to output up
+
+# switch to workspace
+bindsym $mod+1 workspace number 1 www
+bindsym $mod+2 workspace number 2 mail
+bindsym $mod+3 workspace number 3 chat
+bindsym $mod+4 workspace number 4 music
+bindsym $mod+5 workspace number 5 www-sup
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+
+# move focused container to workspace
+# bindsym $mod+Shift+1 move container to workspace 1
+# bindsym $mod+Shift+2 move container to workspace 2
+# bindsym $mod+Shift+3 move container to workspace 3
+# bindsym $mod+Shift+4 move container to workspace 4
+# bindsym $mod+Shift+5 move container to workspace 5
+# bindsym $mod+Shift+6 move container to workspace 6
+# bindsym $mod+Shift+7 move container to workspace 7
+# bindsym $mod+Shift+8 move container to workspace 8
+# bindsym $mod+Shift+9 move container to workspace 9
+# bindsym $mod+Shift+0 move container to workspace 10
+
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+e exec ~/.config/sway/exit.sh
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+    # These bindings trigger as soon as you enter the resize mode
+
+    # Pressing left will shrink the window’s width.
+    # Pressing right will grow the window’s width.
+    # Pressing up will shrink the window’s height.
+    # Pressing down will grow the window’s height.
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
+
+    # same bindings, but for the arrow keys
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# colors
+client.focused          #FFE377 #D0B03C #000000 #E09690 #FFE377
+client.focused_inactive #6D6D6D #5D5D5D #ffffff #B0B0B0 #6D6D6D
+client.unfocused        #333333 #222222 #888888 #292d2e #333333
+client.urgent           #E09690 #C75646 #ffffff #E09690 #E09690
+client.background       #ffffff
+
+bar {
+    swaybar_command waybar
+}
+
+# General device settings
+input type:keyboard {
+    xkb_layout us
+    xkb_options compose:menu
+}
+
+input type:touchpad {
+    natural_scroll enabled
+    tap enabled
+    middle_emulation enabled
+    dwt enabled
+}
+
+# default layout
+workspace_layout tabbed
+default_orientation auto
+
+set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
+
+# media keys
+bindsym XF86MonBrightnessUp exec brightnessctl set +5% -m | cut -d ',' -f 4 | tr -d '%' > $WOBSOCK
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%- -m | cut -d ',' -f 4 | tr -d '%' > $WOBSOCK
+bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5% && pactl get-sink-volume @DEFAULT_SINK@ | head -n 1| awk '{print substr($5, 1, length($5)-1)}' > $WOBSOCK
+bindsym --locked XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% && pactl get-sink-volume @DEFAULT_SINK@ | head -n 1| awk '{print substr($5, 1, length($5)-1)}' > $WOBSOCK
+bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle && ( [ "$(pactl get-sink-mute @DEFAULT_SINK@)" = "Mute: yes" ] && echo 0 > $WOBSOCK ) || pactl get-sink-volume @DEFAULT_SINK@ | head -n 1| awk '{print substr($5, 1, length($5)-1)}' > $WOBSOCK
+bindsym --locked XF86AudioPlay exec playerctl play-pause
+bindsym --locked XF86AudioStop  exec playerctl stop
+bindsym --locked XF86AudioNext exec playerctl next
+bindsym --locked XF86AudioPrev exec playerctl previous
+
+# Workspace and window assignments
+for_window [app_id="firefox"] move to workspace 1 www
+for_window [class="ncspot"] move to workspace 4 music
+for_window [app_id="ncspot"] move to workspace 4 music
+for_window [app_id="(T|t)hunderbird"] move to workspace 2 mail
+for_window [app_id="^mcabber$"] move to workspace 3 chat
+for_window [title="Element.*"] move to workspace 3 chat
+for_window [app_id="^weechat$"] move to workspace 3 chat
+for_window [app_id="Slack"] move to workspace 3 chat
+for_window [app_id="Element"] move to workspace 3 chat
+for_window [app_id="Rocket.Chat"] move to workspace 3 chat
+
+# floating windows
+for_window [app_id="thunderbird" instance="Dialog"] floating enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [class="jetbrains-.*" title="splash"] floating enable
+for_window [title="Firefox — Sharing Indicator"] floating enable
+for_window [app_id="firefox" title=".*Bitwarden Password Manager.*"] floating enable
+
+# Work around slow GTK startup
+# https://github.com/swaywm/sway/wiki#gtk-applications-take-20-seconds-to-start
+# https://github.com/swaywm/sway/issues/5732
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+
+# floating terminal
+exec --no-startup-id foot --app-id=floating-terminal
+for_window [app_id="^floating-terminal$"] move scratchpad
+for_window [class="Logseq"] move scratchpad
+
+# autostart
+exec swayidle -w \
+    timeout 300 'chayang -d 10 && swaylock -f -c 444444' \
+    timeout 360 'swaymsg "output * power off"' \
+        resume 'swaymsg "output * power on"' \
+    before-sleep 'swaymsg "output * power on"' \
+    before-sleep 'swaylock -f -c 444444' \
+    after-resume 'swaymsg "output * power on"'
+exec --no-startup-id mako
+exec --no-startup-id 'sleep 2; dex -a -e SWAY'
+
+# Support polkit authentication
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec --no-startup-id /usr/libexec/polkit-gnome-authentication-agent-1
+
+include ~/.config/sway/config.d/*
