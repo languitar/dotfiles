@@ -1,0 +1,2 @@
+# copy to clipborad instead of primary
+set selection-clipboard clipboard
