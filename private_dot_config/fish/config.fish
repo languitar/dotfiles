@@ -64,15 +64,6 @@ if test -f ~/.config/fish/localconfig.fish
     source ~/.config/fish/localconfig.fish
 end
 
-# enable homeshick if possible
-if test -f "$HOME/.homesick/repos/homeshick/homeshick.fish"
-    source "$HOME/.homesick/repos/homeshick/homeshick.fish"
-    source "$HOME/.homesick/repos/homeshick/completions/homeshick.fish"
-    if status --is-interactive
-        homeshick --quiet refresh
-    end
-end
-
 set -x ZK_NOTEBOOK_DIR ~/Nextcloud/notes/zettelkasten/
 
 # check for new mail
