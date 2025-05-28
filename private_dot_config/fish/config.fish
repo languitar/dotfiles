@@ -18,6 +18,9 @@ end
 if test -d ~/.npm/bin
     set -x -p PATH ~/.npm/bin
 end
+if test -d ~/.krew/bin
+    set -x -p PATH ~/.krew/bin
+end
 
 # determine the editor to use
 if type -q nvim
