@@ -7,3 +7,7 @@ vim.opt.clipboard = ""
 
 -- Don't auto-format by default
 vim.g.autoformat = false
+
+if vim.fn.has("wsl") == 1 then
+  vim.g.clipboard = "win32yank"
+end
