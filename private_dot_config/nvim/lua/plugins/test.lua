@@ -1,7 +1,17 @@
 return {
-  { "nvim-neotest/neotest-python" },
-  {
     "nvim-neotest/neotest",
-    opts = { adapters = { "neotest-python" } },
-  },
+    dependencies = {
+        "nvim-neotest/nvim-nio",
+        "nvim-treesitter/nvim-treesitter",
+        "nvim-neotest/neotest-python",
+        "nvim-neotest/neotest-jest",
+    },
+    config = function()
+        require("neotest").setup({
+            adapters = {
+                require("neotest-python")({}),
+                require("neotest-jest")({}),
+            },
+        })
+    end,
 }
