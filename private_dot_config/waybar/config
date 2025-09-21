@@ -39,7 +39,7 @@
         "format": " {usage:>3}%"
     },
     "memory#ram": {
-        "format": " {percentage:>2}%",
+        "format": " {percentage:>2}%",
         "states": {
             "warning": 90,
             "critical": 95
@@ -116,9 +116,9 @@
         "format-bluetooth": "{icon} {volume}%",
         "format-muted": "",
         "format-icons": {
-            "headphones": "",
-            "handsfree": "",
-            "headset": "",
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
             "phone": "",
             "portable": "",
             "car": "",
