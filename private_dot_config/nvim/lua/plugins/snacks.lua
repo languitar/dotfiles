@@ -4,6 +4,13 @@ return {
     opts = {
       terminal = {
         shell = "fish"
+      },
+      picker = {
+        formatters = {
+          file = {
+            truncate = 120
+          }
+        }
       }
     },
   },
