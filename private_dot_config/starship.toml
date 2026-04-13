@@ -29,7 +29,13 @@ format = """\
     """
 
 [aws]
-disabled = true
+disabled = false
+format = '[$symbol($profile )(\($region\) )(\[$duration\] )]($style)'
+symbol = '🅰 '
+[aws.region_aliases]
+eu-central-1 = "eu-c-1"
+[aws.profile_aliases]
+"platform-production.PlatformEngineer" = "pp.PlaEng"
 
 [kubernetes]
 disabled = false
