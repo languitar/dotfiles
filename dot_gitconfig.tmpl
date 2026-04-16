@@ -2,9 +2,7 @@
     excludesfile = ~/.gitignore_global
 [user]
     name = Johannes Wienke
-    email = languitar@semipol.de
-[credential]
-    helper = !pass-git-helper $@
+    email = {{ or (index . "git_email") "languitar@semipol.de" | quote }}
 [push]
     default = current
 [color]
