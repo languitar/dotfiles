@@ -1,0 +1,12 @@
+{{- if eq .chezmoi.os "windows" }}
+*
+!.config/nvim
+!.gitconfig
+!.gitignore_global
+!.npmrc
+!.wezterm.lua
+{{- end}}
+
+{{- if ne .chezmoi.os "windows" }}
+.wezterm.lua
+{{- end}}
